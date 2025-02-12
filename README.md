@@ -10,10 +10,41 @@ As a professional programmer, I hope to practice some routines that can be often
 
 ## Cheat sheet of golang
 
-* [Golang cheat sheet](go-cheat-sheet.md)
-
+* [Go cheatsheet 1](go-cheat-sheet.md)
+* [Go cheatsheet 2 ](https://devhints.io/go)
+* [Go cheatsheet 3](https://quickref.me/go.html)
+  
 ## example
 
 * [cron-service.go](./kata/cron)
 * [list_files.go](./kata/files/list_files.go)
 * [links.go](./kata/http/links.go)
+
+## go with vscode
+* install go extensions and [delve](https://github.com/go-delve/delve/blob/master/Documentation/installation/osx/install.md)
+* configuration of go debug in vscode
+
+```json
+ {
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug file",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${file}"
+        },
+        {
+            "name": "Launch Package",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${fileDirname}"
+        }
+    ]
+}
+```
