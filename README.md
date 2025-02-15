@@ -13,7 +13,19 @@ As a professional programmer, I hope to practice some routines that can be often
 * [Go cheatsheet 1](go-cheat-sheet.md)
 * [Go cheatsheet 2 ](https://devhints.io/go)
 * [Go cheatsheet 3](https://quickref.me/go.html)
-  
+
+## Go Tools
+* build and run: go build xxx.go, go run xxx.go
+* check dependency: go list, go get, go mod xxx
+* format code: go fmt, gofmt
+* documentation: go doc, godoc
+* unit test: go test
+* static analysis: go vet
+* performance profile: go tool pprof, go tool trace
+* upgrade: go tool fix
+* bug report: go bug
+
+
 ## example
 
 * [cron-service.go](./kata/cron)
