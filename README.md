@@ -14,6 +14,11 @@ As a professional programmer, I hope to practice some routines that can be often
 * [Go cheatsheet 2 ](https://devhints.io/go)
 * [Go cheatsheet 3](https://quickref.me/go.html)
 
+## Go tutorial
+
+* [Go tutorial](https://tour.golang.org/welcome/1)
+* [Go by example](https://gobyexample.com/)
+
 ## Go Tools
 * build and run: go build xxx.go, go run xxx.go
 * check dependency: go list, go get, go mod xxx
