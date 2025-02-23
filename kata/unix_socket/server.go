@@ -9,14 +9,6 @@ import (
 
 const socketPath = "/tmp/unix_socket_example.sock"
 
-type Request struct {
-	Message string `json:"message"`
-}
-
-type Response struct {
-	Reply string `json:"reply"`
-}
-
 func main() {
 	if err := os.RemoveAll(socketPath); err != nil {
 		fmt.Println("Error removing existing socket file:", err)

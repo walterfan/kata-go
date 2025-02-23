@@ -8,13 +8,6 @@ import (
 
 const socketPath = "/tmp/unix_socket_example.sock"
 
-type Request struct {
-	Message string `json:"message"`
-}
-
-type Response struct {
-	Reply string `json:"reply"`
-}
 
 func main() {
 	conn, err := net.Dial("unix", socketPath)
