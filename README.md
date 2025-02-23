@@ -33,6 +33,7 @@ As a professional programmer, I hope to practice some routines that can be often
 
 ## example
 
+* [unix_socket](./kata/unix_socket)
 * [cron-service.go](./kata/cron)
 * [list_files.go](./kata/files/list_files.go)
 * [links.go](./kata/http/links.go)
