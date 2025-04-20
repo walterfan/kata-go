@@ -23,15 +23,57 @@ As a professional programmer, I hope to practice some routines that can be often
 * [Go Style Best Practices](https://google.github.io/styleguide/go/best-practices)
 
 ## Go Tools
-* build and run: go build xxx.go, go run xxx.go
-* check dependency: go list, go get, go mod xxx
-* format code: go fmt, gofmt
-* documentation: go doc, godoc
-* unit test: go test
-* static analysis: go vet
-* performance profile: go tool pprof, go tool trace
-* upgrade: go tool fix
-* bug report: go bug
+### build and run
+```shell
+go build xxx.go
+go run xxx.go
+```
+### check dependency
+go list, go get, go mod xxx
+
+```
+go mod init my_project
+go mod tidy
+```
+### format code
+go fmt, gofmt
+
+### Debug
+```bash
+dlv debug main.go
+
+```
+### documentation
+go doc, godoc
+
+```shell
+go install github.com/swaggo/swag/cmd/swag@latest
+swag init
+
+```
+### ****unit test
+go test
+### static analysis
+go vet, golangci-lint
+
+e.g.
+  ```bash
+  brew install golangci-lint
+  golangci-lint run ./...
+  ```
+### performance profile
+go tool pprof, go tool trace
+
+```bash
+go tool pprof http://localhost:6060/debug/pprof/profile
+
+go run main.go
+go tool trace trace.out
+```
+### upgrade
+go tool fix
+### bug report
+go bug
 
 
 ## example
