@@ -5,11 +5,17 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"path/filepath"
 )
 
 const socketPath = "/tmp/unix_socket_example.sock"
 
 func main() {
+	err := os.MkdirAll(filepath.Dir(socketPath), 0755)
+    if err != nil {
+        panic(err)
+    }
+
 	if err := os.RemoveAll(socketPath); err != nil {
 		fmt.Println("Error removing existing socket file:", err)
 		return

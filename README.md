@@ -18,6 +18,9 @@ As a professional programmer, I hope to practice some routines that can be often
 
 * [Go tutorial](https://tour.golang.org/welcome/1)
 * [Go by example](https://gobyexample.com/)
+* [Go Style Guide](https://google.github.io/styleguide/go/guide)
+* [Go Style Decisions](https://google.github.io/styleguide/go/decisions)
+* [Go Style Best Practices](https://google.github.io/styleguide/go/best-practices)
 
 ## Go Tools
 * build and run: go build xxx.go, go run xxx.go

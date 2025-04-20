@@ -22,7 +22,7 @@ tasks:
     schedule: "*/5 * * * * *"  # Run every 5 seconds
     command: "echo 'Hello, Task 1!'"
   - name: "Task 2"
-    schedule: "*/10 * * * * *" # Run every 10 seconds
+    deadline: "2025-04-10T14:30:00+08:00"
     command: "echo 'Hello, Task 2!'"
 ```
 

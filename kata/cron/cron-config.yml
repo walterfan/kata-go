@@ -1,10 +1,10 @@
 tasks:
   - name: "Task 1"
-    schedule: "0 */6 * * * *"  # Every 5 minutes
+    schedule: "0 */5 * * * *"  # Every 5 minutes
     command: "echo 'Hello from Task 1'"
   - name: "Task 2"
-    schedule: "0 * * * * *"    # Every minute at the 0th seconds
     command: "echo 'Hello from Task 2'"
+    deadline: "2025-04-10T14:30:00+08:00"
   - name: "Task 3"
-    schedule: "*/5 * * * * *"  # Every 5 seconds
+    schedule: "0 * * * * *"  # Every 1 minute
     function: "check(https://www.fanyamin.com)"

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DeepSeek QA</title>
+    <style>
+        body { max-width: 800px; margin: 20px auto; padding: 20px; }
+        .question-box { width: 100%; height: 100px; }
+        .answer { margin-top: 20px; padding: 10px; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <h1>Ask DeepSeek</h1>
+    
+    {{if .error}}
+        <div style="color: red;">{{.error}}</div>
+    {{end}}
+
+    <form method="POST" action="/ask">
+        <textarea
+            class="question-box" 
+            name="question" 
+            placeholder="Enter your question here..." 
+            required
+        >{{if .form}}{{.form.Question}}{{end}}</textarea>
+        <br>
+        <button type="submit">Ask</button>
+    </form>
+
+    {{if .form.Answer}}
+    <div class="answer">
+        {{safeHTML .form.Answer}}
+    </div>
+    {{end}}
+</body>
+</html>
