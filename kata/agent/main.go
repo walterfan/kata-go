@@ -14,6 +14,12 @@ import (
 	"github.com/siddontang/go/log"
 )
 
+var (
+	baseUrl  string
+	llmModel string
+	apiKey   string
+)
+
 type QuestionForm struct {
 	Question string `form:"question"`
 	Answer   string
@@ -159,4 +165,18 @@ func BasicAuthMiddleware() gin.HandlerFunc {
 	return gin.BasicAuth(gin.Accounts{
 		expectedUser: expectedPass,
 	})
+}
+
+func init() {
+	// Load environment variables from .env file
+	if err := godotenv.Load(); err != nil {
+		if !os.IsNotExist(err) {
+			panic("Error loading .env file: " + err.Error())
+		}
+	}
+
+	// Assign values from environment variables
+	baseUrl = os.Getenv("LLM_BASE_URL")
+	llmModel = os.Getenv("LLM_MODEL")
+	apiKey = os.Getenv("LLM_API_KEY")
 }
