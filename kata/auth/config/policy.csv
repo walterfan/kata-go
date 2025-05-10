@@ -1,0 +1,2 @@
+p, admin, /admin, GET
+p, user, /user, GET
