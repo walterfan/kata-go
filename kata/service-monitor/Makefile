@@ -5,6 +5,9 @@ GO = go
 GOFLAGS = -v
 TEST_FLAGS = -coverprofile=coverage.out
 
+X86_64_OUTPUT=$(PROJECT_NAME)-amd64
+ARM64_OUTPUT=$(PROJECT_NAME)-arm64
+
 # Default target
 all: build
 
@@ -12,6 +15,23 @@ all: build
 build:
 	@echo "Building $(PROJECT_NAME)..."
 	@$(GO) build $(GOFLAGS) -o $(PROJECT_NAME) main.go
+
+# Build for X86_64 (Linux)
+build-amd64:
+	GOOS=linux GOARCH=amd64 go build -o $(X86_64_OUTPUT)
+
+# Build for ARM64 (Linux)
+build-arm64:
+	GOOS=linux GOARCH=arm64 go build -o $(ARM64_OUTPUT)
+
+# Optional: Cross-platform build for macOS (x86_64)
+build-macos-amd64:
+	GOOS=darwin GOARCH=amd64 go build -o $(BINARY_NAME)-macos-amd64
+
+# Optional: Cross-platform build for macOS (ARM64/M1)
+build-macos-arm64:
+	GOOS=darwin GOARCH=arm64 go build -o $(BINARY_NAME)-macos-arm64
+
 
 # Run tests
 test:
@@ -31,7 +51,7 @@ coverage:
 # Clean up build artifacts
 clean:
 	@echo "Cleaning up..."
-	@rm -f $(PROJECT_NAME) coverage.out
+	@rm -f $(PROJECT_NAME) coverage.out $(X86_64_OUTPUT) $(ARM64_OUTPUT) $(PROJECT_NAME)-macos-*
 
 # Run the application
 run:
