@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>LLM Agent Web Client</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script src="index.js"></script>
+  <link rel="stylesheet" href="index.css">
+
+
+</head>
+<body>
+  <div id="app">
+    <h2>LLM Code Assistant</h2>
+
+    <label>Prompt Name</label>
+    <select v-model="formData.prompt.name">
+      <option v-for="prompt in prompts" :key="prompt.name" :value="prompt.name">
+        {{ prompt.name }} — {{ prompt.description }}
+      </option>
+    </select>
+
+    <!-- System Prompt -->
+    <label>System Prompt</label>
+    <textarea v-model="formData.prompt.system_prompt" rows="2"></textarea>
+
+    <!-- User Prompt -->
+    <label>User Prompt</label>
+    <textarea v-model="formData.prompt.user_prompt" rows="6"></textarea>
+
+    <label>Code Path</label>
+    <input type="text" v-model="formData.code_path" placeholder="/cmd/web.go" />
+
+    <label>Output Language</label>
+    <input type="text" v-model="formData.prompt.output_language" placeholder="chinese" />
+
+    <div class="form-row">
+    <label>Stream</label>
+    <div class="radio-group">
+        <label>
+        <input type="radio" name="stream" v-model="formData.stream" :value="true"> Yes
+        </label>
+        <label>
+        <input type="radio" name="stream" v-model="formData.stream" :value="false"> No
+        </label>
+    </div>
+    </div>
+
+    <button @click="submitRequest">Submit</button>
+
+    <h3>Answer:</h3>
+    <pre>{{ answer }}</pre>
+  </div>
+
+</body>
+</html>

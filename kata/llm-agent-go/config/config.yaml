@@ -1,0 +1,222 @@
+prompts:
+  1.explain:
+    description: "Explain the given code"
+    system_prompt: "You are a Go language expert."
+    user_prompt: |
+      Please explain the following code:
+      \n\n```\n{{code}}\n```\n\n
+    tags: code
+
+  2.review:
+    description: "Review code and give suggestions"
+    system_prompt: "You are a Go language expert."
+    user_prompt: |
+      Review the following Go source code and suggest improvements, bug fixes, and style corrections:
+      \n\n```\n{{code}}\n```\n\n
+    tags: code
+
+  3.refactor:
+    description: "Refactor code and give suggestion"
+    system_prompt: "You are a Go language expert."
+    user_prompt: |
+      Refactor the following Go code to be more idiomatic and readable.
+      Output only the updated code:
+      \n\n```\n{{code}}\n```\n\n
+    tags: code
+
+  translate_en:
+    description: "Translate text"
+    system_prompt: "You are a professional translator."
+    user_prompt: |
+      Please translate the following text from {{source_language}} to {{target_language}} while preserving the original tone and meaning.
+    tags: translate
+
+  write_content:
+    description: "Write content"
+    system_prompt: "You are a skilled content writer."
+    user_prompt: |
+      Please write a detailed article on the topic "{{topic}}" that is informative, engaging, and suitable for a {{audience}}.
+    tags: write
+
+  summarize:
+    description: "Summarize content"
+    system_prompt: "You are an expert summarizer."
+    user_prompt: |
+      Please provide a concise summary of the following text: \n\n"{{text}}"
+    tags: summarize
+
+  generate:
+    description: "Generate content"
+    system_prompt: "You are a creative generator of ideas."
+    user_prompt: |
+      Please generate {{type}} ideas for "{{context}}" that are original, relevant, and practical.
+    tags: generate
+
+  translate_cn:
+    description: "翻译文本"
+    system_prompt: "你是一名专业的翻译人员。"
+    user_prompt: |
+      请将以下文本从{{source_language}}翻译为{{target_language}}，并保留原文的语气和含义: \n\n"{{text}}"
+    tags: 翻译
+
+  write_cn:
+    description: "写作内容"
+    system_prompt: "你是一名熟练的内容创作者。"
+    user_prompt: |
+      请围绕主题“{{topic}}”写一篇详细的文章，内容需信息丰富、有吸引力，并适合{{audience}}。
+    tags: 写作
+
+  summarize_cn:
+    description: "总结内容"
+    system_prompt: "你是一名优秀的摘要专家。"
+    user_prompt: |
+      请对以下文本进行简洁的总结:\n\n"{{text}}"
+    tags: 总结
+
+  generate_cn:
+    description: "生成内容"
+    system_prompt: "你是一名富有创意的点子生成者。"
+    user_prompt: |
+      请为“{{context}}”生成{{type}}的点子，要求原创、相关且可行。
+    tags: 生成
+
+  explain_syntax:
+    description: "Explain syntax"
+    system_prompt: "You are an expert in {{language}}"
+    user_prompt: |
+      please explain how the {{function}} works in {{language}} in a simple and understandable way
+    tags: learn
+
+  best_practice:
+    description: "Best practice"
+    system_prompt: "You are an expert in {{language}}"
+    user_prompt: |
+      please show me best practices for writing {{function}} in {{language}} in a simple and understandable way
+    tags: learn
+
+  write_function:
+    description: "Write function"
+    system_prompt: "You are an expert in {{language}}"
+    user_prompt: |
+      please write a {{function_name}} function to {{function_desc}}. It accepts {{input_parameters}} and returns {{output_result}}
+    tags: code
+
+  recommend_framework:
+    description: "Recommend framework"
+    system_prompt: "You are an expert in {{language}}"
+    user_prompt: |
+      please recommend a suitable framework for {{function}} about {{feature}} that following 4L principle (Lots of people use it, Lots of learning materials, Lots of successful cases, License is free)
+    tags: design
+
+  correct_syntax:
+    description: "Correct syntax"
+    system_prompt: "You are an expert in {{language}}"
+    user_prompt: |
+      please explain what is the correct syntax for {{function}} in {{language}} in a simple and understandable way with examples
+    tags: code
+
+  design_suggestion:
+    description: "Design suggestion"
+    system_prompt: "You are an expert at system design and architecture"
+    user_prompt: |
+      please tell me how to design a {{system}} for {{business}}. The technology stack is {{technologies}}.
+    tags: design
+
+  fill_in_the_middle:
+    description: "Fill-in-the-middle"
+    system_prompt: "You are an expert in {{language}}"
+    user_prompt: |
+      please complete the following code snippet according to the code comments and provide a complete set of unit test cases.
+    tags: code
+
+  convert_code:
+    description: "Convert code"
+    system_prompt: "You are an expert of {{language1}} and {{language2}}"
+    user_prompt: |
+      please convert the below code snippet from {{language1}} to {{language2}}:
+    tags: code
+
+  code_generation:
+    description: "Code generation"
+    system_prompt: "You are an expert in {{language}} and {{frameworks}}"
+    user_prompt: |
+      please use {{frameworks}} to generate CRUD code of corresponding controller, service and repository classes for the following entity classes.
+    tags: code
+
+  code_optimization:
+    description: "Optimize code"
+    system_prompt: "You are an expert in {{language}}"
+    user_prompt: |
+      please optimize the following {{language}} code for '{{explain}}' to make it more {{purpose}}:
+    tags: code
+
+  code_review:
+    description: "Find bad smell"
+    system_prompt: "You are an expert in {{language}}"
+    user_prompt: |
+      please review the following {{language}} code for code smells and suggest improvements:
+    tags: code
+
+  bug_fix:
+    description: "Fix bug"
+    system_prompt: "You are an expert in {{language}}"
+    user_prompt: |
+      please teach me how to fix {{issue}} of the following {{language}} code which is for '{{explain}}':
+    tags: code
+
+  code_refactoring:
+    description: "Refactor code"
+    system_prompt: "You are an expert in {{language}}"
+    user_prompt: |
+      please refactor the given {{language}} code to improve its error handling and resilience:
+    tags: code
+
+  domain_design:
+    description: "Domain design"
+    system_prompt: "You are an expert in {{language}} and {{domain}}"
+    user_prompt: |
+      please suggest for designing an effective data model for {{project}} which is for {{purpose}}:
+    tags: design
+
+  execute_code:
+    description: "Execute code"
+    system_prompt: "You are a {{language}} interpreter/compiler"
+    user_prompt: |
+      please execute the following {{language}} code, and tell me the execution result, or something wrong if there are any errors of syntax or logic
+    tags: test
+
+  unit_test:
+    description: "Write unit tests"
+    system_prompt: "You are an expert in {{language}}"
+    user_prompt: |
+      please write unit tests for the following code that is for {{explain}} using {{framework}}
+    tags: test
+
+  write_document:
+    description: "Write documentation"
+    system_prompt: "You are an expert in {{language}} and {{domain}}, and you are also a professional document writer,"
+    user_prompt: |
+      please write documentation for the code below. You should include detailed instructions to allow a developer to understand and execute easily, also explain what the code does, and possible vulnerabilities that exist in this code:
+    tags: code
+
+  explain_architecture:
+    description: "Explain architecture"
+    system_prompt: "You are an expert in {{language}} and {{domain}}"
+    user_prompt: |
+      please explain the architecture of {{framework}} and main workflow in a simple and understandable way, also provide some UML diagrams and examples, so that I can have a deeper understanding.
+    tags: design
+
+  log_and_metrics:
+    description: "Add metrics and log"
+    system_prompt: "You are an expert in {{language}} and {{domain}}"
+    user_prompt: |
+      please add metrics and log for the following {{language}} code that {{explain}}, so that I can measure its performance and easy troubleshooting
+    tags: operation
+
+  write_script:
+    description: "Write script"
+    system_prompt: "You are an expert in {{language}} and {{domain}}"
+    user_prompt: |
+      please write a script for {{purpose}} by {{tool}} that is to {{explain}}
+    tags: code
+

@@ -9,12 +9,16 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 )
 
 type ChatRequest struct {
-	Model    string      `json:"model"`
-	Messages []ChatEntry `json:"messages"`
-	Stream   bool        `json:"stream"`
+	Model       string      `json:"model"`
+	Messages    []ChatEntry `json:"messages"`
+	Stream      bool        `json:"stream"`
+	Temperature float64     `json:"temperature,omitempty"` // Default: 1.0
+	//TopP        float64     `json:"top_p,omitempty"`       // Default: 1.0
+	//MaxTokens   int         `json:"max_tokens,omitempty"`  // Default: 4096
 }
 
 type ChatEntry struct {
@@ -28,17 +32,28 @@ type ChatResponse struct {
 	} `json:"choices"`
 }
 
-func AskLLM(prompt string) (string, error) {
+func AskLLM(systemPrompt string, userPrompt string) (string, error) {
 	baseUrl := os.Getenv("LLM_BASE_URL")
 	apiKey := os.Getenv("LLM_API_KEY")
 	model := os.Getenv("LLM_MODEL")
 
+	temperatureStr := os.Getenv("LLM_TEMPERATURE")
+	if temperatureStr == "" {
+		temperatureStr = "1.0"
+	}
+	temperature, err := strconv.ParseFloat(temperatureStr, 64)
+	if err != nil {
+		temperature = 1.0
+	}
+
 	req := ChatRequest{
-		Model: model,
+		Model:  model,
 		Stream: false,
 		Messages: []ChatEntry{
-			{Role: "user", Content: prompt},
+			{Role: "system", Content: systemPrompt},
+			{Role: "user", Content: userPrompt},
 		},
+		Temperature: temperature,
 	}
 	body, _ := json.Marshal(req)
 
@@ -62,17 +77,29 @@ func AskLLM(prompt string) (string, error) {
 	return out.Choices[0].Message.Content, nil
 }
 
-func AskLLMWithStream(prompt string, processChunk func(string)) error {
+func AskLLMWithStream(systemPrompt string, userPrompt string, processChunk func(string)) error {
 	baseUrl := os.Getenv("LLM_BASE_URL")
 	apiKey := os.Getenv("LLM_API_KEY")
 	model := os.Getenv("LLM_MODEL")
 
+	temperatureStr := os.Getenv("LLM_TEMPERATURE")
+	if temperatureStr == "" {
+		temperatureStr = "1.0"
+	}
+	temperature, err := strconv.ParseFloat(temperatureStr, 64)
+	if err != nil {
+		temperature = 1.0
+	}
+
+	//log.Printf("Asking LLM with stream %s, %s", systemPrompt, userPrompt)
 	req := ChatRequest{
 		Model:  model,
-		Stream: true, // 🔥 Enable stream mode
+		Stream: true, // Enable stream mode
 		Messages: []ChatEntry{
-			{Role: "user", Content: prompt},
+			{Role: "system", Content: systemPrompt},
+			{Role: "user", Content: userPrompt},
 		},
+		Temperature: temperature,
 	}
 	body, _ := json.Marshal(req)
 
