@@ -3,6 +3,7 @@ package llm
 import (
 	"bufio"
 	"bytes"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -61,7 +62,12 @@ func AskLLM(systemPrompt string, userPrompt string) (string, error) {
 	httpReq.Header.Set("Authorization", "Bearer "+apiKey)
 	httpReq.Header.Set("Content-Type", "application/json")
 
-	resp, err := http.DefaultClient.Do(httpReq)
+	//resp, err := http.DefaultClient.Do(httpReq)
+	transport := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	client := &http.Client{Transport: transport}
+	resp, err := client.Do(httpReq)
 	if err != nil {
 		return "", err
 	}
