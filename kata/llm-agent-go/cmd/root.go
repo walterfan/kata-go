@@ -7,7 +7,6 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	"github.com/walterfan/llm-agent-go/internal/llm"
 	"github.com/walterfan/llm-agent-go/internal/log"
 	"go.uber.org/zap"
@@ -25,23 +24,6 @@ type PromptConfig struct {
 	Tags         string `mapstructure:"tags" json:"tags"`
 }
 
-func getPromptConfig(commandName string) (*PromptConfig, error) {
-	promptList := viper.Get("prompts").([]interface{})
-	for _, p := range promptList {
-		itemMap := p.(map[string]interface{})
-		if itemMap["name"].(string) == commandName {
-			return &PromptConfig{
-				Name:         itemMap["name"].(string),
-				Description:  itemMap["description"].(string),
-				SystemPrompt: itemMap["system_prompt"].(string),
-				UserPrompt:   itemMap["user_prompt"].(string),
-				Tags:         itemMap["tags"].(string),
-			}, nil
-		}
-	}
-	return nil, fmt.Errorf("prompt not found for command: %s", commandName)
-}
-
 func processCommand(cmd *cobra.Command, args []string) {
 	path := args[0]
 	commandName, _ := cmd.Flags().GetString("command")
@@ -54,7 +36,7 @@ func processCommand(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	selectedPrompt, err := getPromptConfig(commandName)
+	selectedPrompt, err := getPromptConfigByName(commandName)
 	if err != nil {
 		fmt.Println(err)
 		return

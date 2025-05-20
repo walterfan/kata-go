@@ -1,5 +1,5 @@
 prompts:
-  1.explain:
+  explain:
     description: "Explain the given code"
     system_prompt: "You are a Go language expert."
     user_prompt: |
@@ -7,7 +7,7 @@ prompts:
       \n\n```\n{{code}}\n```\n\n
     tags: code
 
-  2.review:
+  review:
     description: "Review code and give suggestions"
     system_prompt: "You are a Go language expert."
     user_prompt: |
@@ -15,7 +15,7 @@ prompts:
       \n\n```\n{{code}}\n```\n\n
     tags: code
 
-  3.refactor:
+  refactor:
     description: "Refactor code and give suggestion"
     system_prompt: "You are a Go language expert."
     user_prompt: |

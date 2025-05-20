@@ -5,20 +5,13 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"sort"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
-	"github.com/walterfan/llm-agent-go/internal/llm"
-)
 
-var (
-	port             string
-	cachedPromptMap  map[string]interface{}
-	cachedPromptList []string // new field to preserve order
+	"github.com/walterfan/llm-agent-go/internal/llm"
 )
 
 // Request structure for incoming JSON
@@ -73,7 +66,7 @@ func handleWebSocket(c *gin.Context) {
 	}
 
 	// Build final prompt
-	selectedPrompt, err := getPromptConfigFromAPIRequest(req.Prompt.Name)
+	selectedPrompt, err := getPromptConfigByName(req.Prompt.Name)
 	//append if it not exist in user_prompt: ```\n\nnote: please use {{output_language}} to output
 
 	if !strings.Contains(selectedPrompt.UserPrompt, "{{output_language}}") {
@@ -103,25 +96,6 @@ func handleWebSocket(c *gin.Context) {
 	}
 }
 
-// getPromptConfigFromAPIRequest finds prompt config by name from config.yaml
-func getPromptConfigFromAPIRequest(name string) (*PromptRequest, error) {
-	item, ok := cachedPromptMap[name]
-	if !ok {
-		return nil, fmt.Errorf("prompt not found: %s", name)
-	}
-
-	itemMap, ok := item.(map[string]interface{})
-	if !ok {
-		return nil, fmt.Errorf("invalid prompt format for: %s", name)
-	}
-
-	return &PromptRequest{
-		Name:         name,
-		SystemPrompt: itemMap["system_prompt"].(string),
-		UserPrompt:   itemMap["user_prompt"].(string),
-	}, nil
-}
-
 // processLLM handles the LLM request logic
 func processLLM(c *gin.Context) {
 	var req APIRequest
@@ -134,7 +108,7 @@ func processLLM(c *gin.Context) {
 	// Build prompt text
 	var promptText string
 	if req.Prompt.Name != "" {
-		selectedPrompt, err := getPromptConfigFromAPIRequest(req.Prompt.Name)
+		selectedPrompt, err := getPromptConfigByName(req.Prompt.Name)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -239,30 +213,6 @@ func init() {
 	if err := InitConfig(); err != nil {
 		panic(err)
 	}
-	cachedPromptMap = viper.GetStringMap("prompts")
-	// Preserve original order from YAML (keys are ordered in interface{})
-	promptNode := viper.Get("prompts")
-	if promptNode == nil {
-		panic("prompts configuration is missing")
-	}
-
-	m, ok := promptNode.(map[string]interface{})
-	if !ok {
-		// Debugging: Print the actual type and value for diagnosis
-		fmt.Fprintf(os.Stderr, "Unexpected type for 'prompts': %T, value: %+v\n", promptNode, promptNode)
-		panic("prompts must be a map[string]interface{} in config")
-	}
-
-	// Proceed safely
-	cachedPromptList = make([]string, 0, len(m))
-	for k := range m {
-		keyStr := k // Already a string, no assertion needed
-		cachedPromptList = append(cachedPromptList, keyStr)
-	}
-	// Optional: sort by number prefix if needed
-	sort.SliceStable(cachedPromptList, func(i, j int) bool {
-		return cachedPromptList[i] < cachedPromptList[j]
-	})
 
 	webCmd.Flags().StringVarP(&port, "port", "p", "8080", "Specify custom port for the web server")
 	rootCmd.AddCommand(webCmd)
