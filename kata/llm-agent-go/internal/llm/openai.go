@@ -33,7 +33,26 @@ type ChatResponse struct {
 	} `json:"choices"`
 }
 
-func AskLLM(systemPrompt string, userPrompt string) (string, error) {
+func createClient() (*http.Client, error) {
+	transport := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	return &http.Client{Transport: transport}, nil
+}
+
+func buildChatRequest(systemPrompt, userPrompt, model string, stream bool, temperature float64) (*ChatRequest, error) {
+	return &ChatRequest{
+		Model:       model,
+		Stream:      stream,
+		Messages: []ChatEntry{
+			{Role: "system", Content: systemPrompt},
+			{Role: "user", Content: userPrompt},
+		},
+		Temperature: temperature,
+	}, nil
+}
+
+func loadBaseConfig() (string, string, string, float64, error) {
 	baseUrl := os.Getenv("LLM_BASE_URL")
 	apiKey := os.Getenv("LLM_API_KEY")
 	model := os.Getenv("LLM_MODEL")
@@ -47,26 +66,33 @@ func AskLLM(systemPrompt string, userPrompt string) (string, error) {
 		temperature = 1.0
 	}
 
-	req := ChatRequest{
-		Model:  model,
-		Stream: false,
-		Messages: []ChatEntry{
-			{Role: "system", Content: systemPrompt},
-			{Role: "user", Content: userPrompt},
-		},
-		Temperature: temperature,
+	return baseUrl, apiKey, model, temperature, nil
+}
+func AskLLM(systemPrompt string, userPrompt string) (string, error) {
+	baseUrl, apiKey, model, temperature, err := loadBaseConfig()
+	if err != nil {
+		return "", err
 	}
+
+	req, err := buildChatRequest(systemPrompt, userPrompt, model, false, temperature)
+	if err != nil {
+		return "", err
+	}
+
 	body, _ := json.Marshal(req)
 
-	httpReq, _ := http.NewRequest("POST", fmt.Sprintf("%s/chat/completions", baseUrl), bytes.NewBuffer(body))
+	httpReq, err := http.NewRequest("POST", fmt.Sprintf("%s/chat/completions", baseUrl), bytes.NewBuffer(body))
+	if err != nil {
+		return "", err
+	}
 	httpReq.Header.Set("Authorization", "Bearer "+apiKey)
 	httpReq.Header.Set("Content-Type", "application/json")
 
-	//resp, err := http.DefaultClient.Do(httpReq)
-	transport := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	client, err := createClient()
+	if err != nil {
+		return "", err
 	}
-	client := &http.Client{Transport: transport}
+
 	resp, err := client.Do(httpReq)
 	if err != nil {
 		return "", err
@@ -84,29 +110,16 @@ func AskLLM(systemPrompt string, userPrompt string) (string, error) {
 }
 
 func AskLLMWithStream(systemPrompt string, userPrompt string, processChunk func(string)) error {
-	baseUrl := os.Getenv("LLM_BASE_URL")
-	apiKey := os.Getenv("LLM_API_KEY")
-	model := os.Getenv("LLM_MODEL")
-
-	temperatureStr := os.Getenv("LLM_TEMPERATURE")
-	if temperatureStr == "" {
-		temperatureStr = "1.0"
-	}
-	temperature, err := strconv.ParseFloat(temperatureStr, 64)
+	baseUrl, apiKey, model, temperature, err := loadBaseConfig()
 	if err != nil {
-		temperature = 1.0
+		return err
 	}
 
-	//log.Printf("Asking LLM with stream %s, %s", systemPrompt, userPrompt)
-	req := ChatRequest{
-		Model:  model,
-		Stream: true, // Enable stream mode
-		Messages: []ChatEntry{
-			{Role: "system", Content: systemPrompt},
-			{Role: "user", Content: userPrompt},
-		},
-		Temperature: temperature,
+	req, err := buildChatRequest(systemPrompt, userPrompt, model, true, temperature)
+	if err != nil {
+		return err
 	}
+
 	body, _ := json.Marshal(req)
 
 	httpReq, err := http.NewRequest("POST", fmt.Sprintf("%s/chat/completions", baseUrl), bytes.NewBuffer(body))
@@ -116,7 +129,12 @@ func AskLLMWithStream(systemPrompt string, userPrompt string, processChunk func(
 	httpReq.Header.Set("Authorization", "Bearer "+apiKey)
 	httpReq.Header.Set("Content-Type", "application/json")
 
-	resp, err := http.DefaultClient.Do(httpReq)
+	client, err := createClient()
+	if err != nil {
+		return err
+	}
+
+	resp, err := client.Do(httpReq)
 	if err != nil {
 		return err
 	}
@@ -126,10 +144,7 @@ func AskLLMWithStream(systemPrompt string, userPrompt string, processChunk func(
 		return fmt.Errorf("unexpected status code: %d", resp.StatusCode)
 	}
 
-	// Stream response line-by-line
 	reader := bufio.NewReader(resp.Body)
-	var contentBuilder []byte
-
 	for {
 		line, err := reader.ReadBytes('\n')
 		if err != nil {
@@ -144,25 +159,22 @@ func AskLLMWithStream(systemPrompt string, userPrompt string, processChunk func(
 			continue
 		}
 
-		data := trimmedLine[6:] // Remove "data: " prefix
+		data := trimmedLine[6:]
 		if len(data) == 0 || bytes.Equal(data, []byte("[DONE]")) {
 			continue
 		}
 
-		// Parse the chunk
 		var chunk map[string]interface{}
 		if err := json.Unmarshal(data, &chunk); err != nil {
 			log.Printf("JSON decode error: %v (raw data: %s)", err, data)
 			continue
 		}
 
-		// Extract delta content
 		if choices, ok := chunk["choices"].([]interface{}); ok && len(choices) > 0 {
 			if choice, ok := choices[0].(map[string]interface{}); ok {
 				if delta, ok := choice["delta"].(map[string]interface{}); ok {
 					if content, ok := delta["content"].(string); ok && content != "" {
-						contentBuilder = append(contentBuilder, content...)
-						processChunk(content) // Callback for handling each received chunk
+						processChunk(content)
 					}
 				}
 			}
