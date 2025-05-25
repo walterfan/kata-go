@@ -122,3 +122,14 @@ go bug
     ]
 }
 ```
+
+## Reference
+* [Go Official Site](https://go.dev/)
+* [Go Documentation](https://pkg.go.dev/)
+* [Go Playground](https://go.dev/play/)
+* [Go Blog](https://blog.golang.org/)
+* [Go Wiki](https://github.com/golang/go/wiki)
+* [Effective Go](https://golang.org/doc/effective_go)
+* [Go Memory Model](https://golang.org/ref/mem)
+* [Go Standards](https://google.github.io/styleguide/go/guide)
+* [Awesome go projects](https://github.com/avelino/awesome-go)
