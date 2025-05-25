@@ -8,6 +8,23 @@ Dave Thomas - the author of "The Pragmatic Programmer", proposed the idea of ​
 
 As a professional programmer, I hope to practice some routines that can be often used in work, such as some small routines for file modification, image cutting, and network sending and receiving, so I will organize and collect some routines here.
 
+
+## Kata
+
+1. [cron-service.go](./kata/cron): demostration of how to implement cron job
+1. [encoding_tool](./kata/encoding_tool): demostrate how to implement encoding command line tool by cobra library
+1. [ds_web_console](./kata/ds_web_console/): demostrate how to call deep seek api and provide a web console by gin library
+1. [ata-auth](./kata/kata-auth/): demostrate how to implement a simple auth system by casbin
+1. [list_files.go](./kata/kata-files/list_files.go): demostrate how to list files in a directory
+1. [links.go](./kata/kata-http/links.go): demostrate how to use http client to get links from a web page
+1. [llm-agent-go](./kata/llm-agent-go/): demostrate how to implement a simple llm agent by gin and vue.js
+1. [prompt_service](./kata/prompt_service): demostrate how to implement a simple prompt management service by gin and gorm with sqlite db
+2. [prompt_service_v2](./kata/prompt_service_v2): add login and metrics endpoint for prompt management service
+3. [service-monitor](./kata/service_monitor): demostrate how to monitor a backend service with prometheus exportor
+4. [simple-ai-agent](./kata/simple-ai-agent): demostrate how to use function calling and tools of openai
+5. [unix_socket](./kata/unix_socket): demostrate how to use unix socket to communicate with backend service
+
+
 ## Cheat sheet of golang
 
 * [Go cheatsheet 1](go-cheat-sheet.md)
@@ -76,12 +93,6 @@ go tool fix
 go bug
 
 
-## example
-
-* [unix_socket](./kata/unix_socket)
-* [cron-service.go](./kata/cron)
-* [list_files.go](./kata/files/list_files.go)
-* [links.go](./kata/http/links.go)
 
 ## go with vscode
 * install go extensions and [delve](https://github.com/go-delve/delve/blob/master/Documentation/installation/osx/install.md)
