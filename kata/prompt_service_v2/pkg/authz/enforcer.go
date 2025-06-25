@@ -3,12 +3,12 @@ package authz
 
 import (
 	"bufio"
-	"fmt"
+
 	"os"
-	"path/filepath"
+
 	"strings"
 
-	"github.com/spf13/viper"
+
 	"github.com/casbin/casbin/v2"
 	gormadapter "github.com/casbin/gorm-adapter/v3"
 	"github.com/walterfan/prompt-service/pkg/database"
