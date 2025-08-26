@@ -68,8 +68,33 @@ go install github.com/swaggo/swag/cmd/swag@latest
 swag init
 
 ```
-### ****unit test
-go test
+### unit test
+
+```
+# Run all tests with verbose output for entire project
+go test -v ./...
+
+# Run tests in specific package with verbose output
+go test -v ./internal/cmd
+
+# Run specific test function
+go test -v ./internal/cmd -run Test_Metrics
+
+# Run tests matching a pattern
+go test -v ./internal/cmd -run "Test.*eks.*"
+
+# Run tests with regex pattern
+go test -v ./internal/cmd -run "^TestMonitor.*"
+
+# Skip specific tests
+go test -v ./internal/cmd -skip "TestFileSync"
+
+# Skip multiple test patterns
+go test -v ./internal/cmd -skip "TestFileSync|TestMetrics"
+
+# Run tests but skip long-running ones
+go test -v ./internal/cmd -short
+```
 ### static analysis
 go vet, golangci-lint
 
