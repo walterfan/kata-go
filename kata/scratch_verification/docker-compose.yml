@@ -1,23 +1,26 @@
 version: '3.8'
 
 services:
-  scratch-verification:
+  scratch-server:
     build:
       context: .
       dockerfile: Dockerfile
       args:
         GOPROXY: ${GOPROXY}
-    container_name: scratch-server
+    container_name: vault-server
     ports:
       - "8080:8080"
     volumes:
       # Mount the config file for easy configuration changes
       - ./config.yaml:/config.yaml:ro
-      # Mount a directory for persistent user data
-      - ./data:/data
+      # Mount a directory for persistent user data and logs
+      - ./data:/app/data
+      - ./log:/app/log
     environment:
       # You can override config values with environment variables if needed
       - SERVER_PORT=8080
+      # Required for password encryption
+      - AES_KEY=${AES_KEY}
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]

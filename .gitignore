@@ -7,13 +7,15 @@
 *.dll
 *.so
 *.dylib
-
+*.db
 # Test binary, built with `go test -c`
 *.test
-
+log/
+data/
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
-
+server
+vault
 # Dependency directories (remove the comment below to include it)
 # vendor/
 

@@ -10,48 +10,48 @@ echo "=================================="
 echo -e "\n1. Testing health endpoint:"
 curl -s http://localhost:8080/health | jq .
 
-# Test create user
-echo -e "\n2. Creating a user:"
-curl -s -X POST http://localhost:8080/users \
+# Test create site
+echo -e "\n2. Creating a site:"
+curl -s -X POST http://localhost:8080/sites \
   -H "Content-Type: application/json" \
   -d '{
-    "id": "user1",
-    "name": "John Doe",
-    "email": "john@example.com",
-    "age": 30
+    "id": "site1",
+    "name": "Example Site 1",
+    "username": "admin",
+    "password": "password123"
   }' | jq .
 
-# Test create another user
-echo -e "\n3. Creating another user:"
-curl -s -X POST http://localhost:8080/users \
+# Test create another site
+echo -e "\n3. Creating another site:"
+curl -s -X POST http://localhost:8080/sites \
   -H "Content-Type: application/json" \
   -d '{
-    "id": "user2",
-    "name": "Jane Smith",
-    "email": "jane@example.com",
-    "age": 25
+    "id": "site2",
+    "name": "Example Site 2",
+    "username": "user",
+    "password": "secret456"
   }' | jq .
 
-# Test get all users
-echo -e "\n4. Getting all users:"
-curl -s http://localhost:8080/users | jq .
+# Test get all sites
+echo -e "\n4. Getting all sites:"
+curl -s http://localhost:8080/sites | jq .
 
-# Test get specific user
-echo -e "\n5. Getting user1:"
-curl -s http://localhost:8080/users/user1 | jq .
+# Test get specific site
+echo -e "\n5. Getting site1:"
+curl -s http://localhost:8080/sites/site1 | jq .
 
-# Test update user
-echo -e "\n6. Updating user1:"
-curl -s -X PUT http://localhost:8080/users/user1 \
+# Test update site
+echo -e "\n6. Updating site1:"
+curl -s -X PUT http://localhost:8080/sites/site1 \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "John Updated Doe",
-    "age": 31
+    "name": "Updated Example Site 1",
+    "username": "newadmin"
   }' | jq .
 
-# Test get updated user
-echo -e "\n7. Getting updated user1:"
-curl -s http://localhost:8080/users/user1 | jq .
+# Test get updated site
+echo -e "\n7. Getting updated site1:"
+curl -s http://localhost:8080/sites/site1 | jq .
 
 # Test command execution
 echo -e "\n8. Executing command 'pwd':"
@@ -77,13 +77,13 @@ curl -s -X POST http://localhost:8080/commands \
   -H "Content-Type: application/json" \
   -d '{"command": "rm -rf /"}' | jq .
 
-# Test delete user
-echo -e "\n12. Deleting user2:"
-curl -s -X DELETE http://localhost:8080/users/user2 | jq .
+# Test delete site
+echo -e "\n12. Deleting site2:"
+curl -s -X DELETE http://localhost:8080/sites/site2 | jq .
 
-# Test get all users after deletion
-echo -e "\n13. Getting all users after deletion:"
-curl -s http://localhost:8080/users | jq .
+# Test get all sites after deletion
+echo -e "\n13. Getting all sites after deletion:"
+curl -s http://localhost:8080/sites | jq .
 
 echo -e "\n=================================="
 echo "Testing completed!"

@@ -2,7 +2,16 @@ server:
   port: 8080
 
 data:
-  data_dir: "/data"
+  data_dir: "./data"
+  log_dir: "./log"
+logging:
+  level: "info"
+  file:
+    filename: "./log/app.log"
+    max_size: 100
+    max_age: 30
+    max_backups: 10
+    compress: true
 
 commands:
   whitelist:

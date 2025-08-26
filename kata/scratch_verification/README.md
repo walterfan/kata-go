@@ -1,14 +1,16 @@
-# Simple HTTP Server with Gin
+# Vault - Simple HTTP Server with Gin
 
 A simple HTTP server built with Go and the Gin framework that provides user CRUD operations, command execution, and graceful shutdown capabilities.
 
 ## Features
 
 - **Health Check**: GET `/health` endpoint returns server status
-- **User Management**: Full CRUD operations for users via `/users` endpoints
+- **Site Management**: Full CRUD operations for sites via `/sites` endpoints
 - **Command Execution**: POST `/commands` endpoint for executing whitelisted shell commands
-- **Data Persistence**: Users are stored in a configurable data directory (default: `/data/users.json`)
-- **Configuration**: YAML-based configuration for server port and command whitelist
+- **Data Persistence**: Sites are stored in SQLite database (default: `/data/sites.db`)
+- **Password Encryption**: Passwords are encrypted using AES-GCM with SHA256 key derivation
+- **Configuration**: YAML-based configuration with go-viper for flexible config management
+- **Structured Logging**: HTTP request/response logging with zap and lumberjack for log rotation
 - **Graceful Shutdown**: Proper signal handling and graceful server shutdown
 
 ## API Endpoints
@@ -16,12 +18,12 @@ A simple HTTP server built with Go and the Gin framework that provides user CRUD
 ### Health Check
 - `GET /health` - Returns `{"status": "ok"}`
 
-### Users
-- `GET /users` - Get all users
-- `GET /users/:id` - Get a specific user by ID
-- `POST /users` - Create a new user
-- `PUT /users/:id` - Update an existing user
-- `DELETE /users/:id` - Delete a user
+### Sites
+- `GET /sites` - Get all sites
+- `GET /sites/:id` - Get a specific site by ID
+- `POST /sites` - Create a new site
+- `PUT /sites/:id` - Update an existing site
+- `DELETE /sites/:id` - Delete a site
 
 ### Commands
 - `POST /commands` - Execute a whitelisted shell command
@@ -37,6 +39,15 @@ server:
 data:
   data_dir: "/data"
 
+logging:
+  level: "info"
+  file:
+    filename: "/data/app.log"
+    max_size: 100
+    max_age: 30
+    max_backups: 10
+    compress: true
+
 commands:
   whitelist:
     - "ls -la"
@@ -47,6 +58,41 @@ commands:
     - "uname -a"
 ```
 
+### Configuration Options
+
+- **server.port**: HTTP server port (default: 8080)
+- **data.data_dir**: Directory for storing user data (default: "/data")
+- **logging.level**: Log level - debug, info, warn, error (default: "info")
+- **logging.file.filename**: Log file path (default: "/data/app.log")
+- **logging.file.max_size**: Maximum log file size in MB (default: 100)
+- **logging.file.max_age**: Maximum age of log files in days (default: 30)
+- **logging.file.max_backups**: Maximum number of backup files (default: 10)
+- **logging.file.compress**: Compress rotated log files (default: true)
+- **commands.whitelist**: List of allowed shell commands
+
+**Note**: All configuration values can be overridden using environment variables. For example, `SERVER_PORT=9000` will override the server port.
+
+### Environment Variables
+
+- **AES_KEY**: Required environment variable for password encryption. This string will be hashed with SHA256 to create the AES-256 key.
+
+**Option 1: Using .env file (Recommended for development)**:
+```bash
+# Create .env file
+cp .env.example .env
+# Edit .env file with your AES key
+```
+
+**Option 2: Using system environment variables**:
+```bash
+export AES_KEY="my-secret-encryption-key-2024"
+```
+
+**Example .env file**:
+```env
+AES_KEY=my-secret-encryption-key-2024
+```
+
 ## Building and Running
 
 ### Prerequisites
@@ -55,18 +101,65 @@ commands:
 ### Build the application
 ```bash
 go mod tidy
-go build -o server main.go
+go build -o vault main.go
 ```
 
-### Run the server
+### Run the vault
 ```bash
-./server
+# Option 1: Using .env file (recommended)
+cp .env.example .env
+# Edit .env file with your AES key
+./vault server
+
+# Option 2: Using environment variable
+export AES_KEY="my-secret-encryption-key-2024"
+./vault server
 ```
 
-The server will start on the configured port (default: 8080).
+The vault will start on the configured port (default: 8080).
 
-### Stop the server
-Press `Ctrl+C` to gracefully shutdown the server.
+### CLI Commands
+
+The application supports comprehensive CLI commands for password encryption/decryption and site management:
+
+#### Basic Commands
+```bash
+# Show help
+./vault --help
+
+# Encrypt a password
+./vault encrypt "mypassword123"
+
+# Decrypt a password
+./vault decrypt "encrypted_password_string"
+
+# Start the HTTP server
+./vault server
+```
+
+#### Sites Management Commands
+```bash
+# List all sites
+./vault sites list
+
+# Get a specific site
+./vault sites get "site-id"
+
+# Create a new site
+./vault sites create "site-id" "Site Name" "username" "password"
+
+# Update an existing site
+./vault sites update "site-id" "New Name" "new_username" "new_password"
+
+# Delete a site
+./vault sites delete "site-id"
+
+# Show sites help
+./vault sites --help
+```
+
+### Stop the vault
+Press `Ctrl+C` to gracefully shutdown the vault.
 
 ## Docker Support
 
@@ -85,13 +178,28 @@ docker build -t scratch-verification .
 
 ### Run with Docker
 ```bash
+# Option 1: Using .env file
+cp .env.example .env
+# Edit .env file with your AES key
 make docker-run
-# or
-docker run -p 8080:8080 --name scratch-server scratch-verification
+
+# Option 2: Using environment variable
+export AES_KEY="my-secret-encryption-key-2024"
+make docker-run
+
+# Or with docker command
+docker run -p 8080:8080 -e AES_KEY="my-secret-encryption-key-2024" --name vault-server scratch-verification server
 ```
 
 ### Run with Docker Compose
 ```bash
+# Option 1: Using .env file
+cp .env.example .env
+# Edit .env file with your AES key
+docker-compose up -d
+
+# Option 2: Using environment variable
+export AES_KEY="my-secret-encryption-key-2024"
 docker-compose up -d
 ```
 
@@ -111,21 +219,21 @@ docker-compose down --rmi all
 
 ## Example Usage
 
-### Create a user
+### Create a site
 ```bash
-curl -X POST http://localhost:8080/users \
+curl -X POST http://localhost:8080/sites \
   -H "Content-Type: application/json" \
   -d '{
-    "id": "user1",
-    "name": "John Doe",
-    "email": "john@example.com",
-    "age": 30
+    "id": "site1",
+    "name": "Example Site",
+    "username": "admin",
+    "password": "password123"
   }'
 ```
 
-### Get all users
+### Get all sites
 ```bash
-curl http://localhost:8080/users
+curl http://localhost:8080/sites
 ```
 
 ### Execute a command
@@ -145,20 +253,28 @@ curl http://localhost:8080/health
 - `main.go` - Main application code
 - `config.yaml` - Configuration file
 - `go.mod` - Go module definition
-- `users.json` - User data storage (created automatically)
+- `sites.db` - SQLite database file (created automatically)
+- `.env.example` - Example environment variables file
+- `.env` - Environment variables file (create from .env.example)
 - `Dockerfile` - Multi-stage Docker build file
 - `docker-compose.yml` - Docker Compose configuration
 - `.dockerignore` - Docker build context exclusions
 - `Makefile` - Build and run commands
 - `test_server.sh` - Comprehensive API testing script
+- `test_encryption.sh` - Encryption functionality test script
+- `example_sites.json` - Example site data structure
 - `README.md` - This file
 
 ## Security Notes
 
-- Only whitelisted commands can be executed
-- Commands are executed with shell privileges
-- User input is validated before processing
-- Consider restricting the command whitelist in production environments
+- **Password Encryption**: All passwords are encrypted using AES-GCM with SHA256 key derivation
+- **Key Management**: The AES key is derived from the `AES_KEY` environment variable using SHA256
+- **Command Security**: Only whitelisted commands can be executed
+- **Input Validation**: User input is validated before processing
+- **Production Considerations**: 
+  - Use a strong, unique AES_KEY in production
+  - Consider restricting the command whitelist
+  - Store the AES_KEY securely (e.g., in a secrets management system)
 
 ## Graceful Shutdown
 

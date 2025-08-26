@@ -17,7 +17,7 @@ RUN go mod tidy
 RUN go mod download
 
 # Build the application with CGO disabled and static linking
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o server .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o vault .
 
 # Runtime stage
 FROM scratch
@@ -26,7 +26,7 @@ FROM scratch
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 # Copy the binary from build stage
-COPY --from=builder /app/server /server
+COPY --from=builder /app/vault /vault
 
 # Copy configuration file
 COPY --from=builder /app/config.yaml /config.yaml
@@ -35,4 +35,4 @@ COPY --from=builder /app/config.yaml /config.yaml
 EXPOSE 8080
 
 # Set the entrypoint
-ENTRYPOINT ["/server"]
+ENTRYPOINT ["/vault"]
