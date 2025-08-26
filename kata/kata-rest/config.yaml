@@ -1,0 +1,101 @@
+collections:
+  - name: "JSONPlaceholder API"
+    requests:
+      - name: "Get All Posts"
+        method: "GET"
+        url: "https://jsonplaceholder.typicode.com/posts"
+        headers:
+          Accept: "application/json"
+          User-Agent: "GoPostman/1.0"
+        parameters: {}
+        body: ""
+        
+      - name: "Get Post by ID"
+        method: "GET"
+        url: "https://jsonplaceholder.typicode.com/posts/1"
+        headers:
+          Accept: "application/json"
+        parameters: {}
+        body: ""
+        
+      - name: "Create New Post"
+        method: "POST"
+        url: "https://jsonplaceholder.typicode.com/posts"
+        headers:
+          Content-Type: "application/json"
+          Accept: "application/json"
+        parameters: {}
+        body: |
+          {
+            "title": "My New Post",
+            "body": "This is the content of my new post",
+            "userId": 1
+          }
+          
+      - name: "Update Post"
+        method: "PUT"
+        url: "https://jsonplaceholder.typicode.com/posts/1"
+        headers:
+          Content-Type: "application/json"
+          Accept: "application/json"
+        parameters: {}
+        body: |
+          {
+            "id": 1,
+            "title": "Updated Post Title",
+            "body": "Updated post content",
+            "userId": 1
+          }
+          
+      - name: "Delete Post"
+        method: "DELETE"
+        url: "https://jsonplaceholder.typicode.com/posts/1"
+        headers:
+          Accept: "application/json"
+        parameters: {}
+        body: ""
+
+  - name: "Local Development"
+    requests:
+      - name: "Local Health Check"
+        method: "GET"
+        url: "http://localhost:8080/health"
+        headers:
+          Accept: "application/json"
+        parameters: {}
+        body: ""
+        
+      - name: "Local API Test"
+        method: "POST"
+        url: "http://localhost:8080/api/test"
+        headers:
+          Content-Type: "application/json"
+          Authorization: "Bearer your-token-here"
+        parameters:
+          debug: "true"
+          format: "json"
+        body: |
+          {
+            "message": "Hello from GoPostman",
+            "timestamp": "2024-01-01T00:00:00Z"
+          }
+
+  - name: "Sample REST APIs"
+    requests:
+      - name: "Random User"
+        method: "GET"
+        url: "https://randomuser.me/api/"
+        headers:
+          Accept: "application/json"
+        parameters:
+          results: "5"
+          gender: "female"
+        body: ""
+        
+      - name: "Cat Facts"
+        method: "GET"
+        url: "https://catfact.ninja/fact"
+        headers:
+          Accept: "application/json"
+        parameters: {}
+        body: "" 

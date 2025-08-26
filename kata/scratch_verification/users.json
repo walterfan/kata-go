@@ -1,0 +1,10 @@
+{
+  "user1": {
+    "id": "user1",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "age": 30,
+    "created": "2025-08-26T11:01:22+08:00",
+    "modified": "2025-08-26T11:01:22+08:00"
+  }
+}

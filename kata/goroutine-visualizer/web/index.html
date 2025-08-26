@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goroutine 调度器可视化</title>
+    <link rel="stylesheet" href="web/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔄 Goroutine 调度器可视化</h1>
+            <div class="status-indicator">
+                <span id="connection-status" class="status-dot disconnected"></span>
+                <span id="connection-text">未连接</span>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <!-- 系统概览 -->
+            <div class="panel overview-panel">
+                <h2>系统概览</h2>
+                <div class="overview-grid">
+                    <div class="metric">
+                        <h3 id="goroutine-count">0</h3>
+                        <p>Goroutine 总数</p>
+                    </div>
+                    <div class="metric">
+                        <h3 id="cpu-count">0</h3>
+                        <p>CPU 核心数</p>
+                    </div>
+                    <div class="metric">
+                        <h3 id="gomaxprocs">0</h3>
+                        <p>GOMAXPROCS</p>
+                    </div>
+                    <div class="metric">
+                        <h3 id="memory-usage">0 MB</h3>
+                        <p>内存使用</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goroutine 数量趋势图 -->
+            <div class="panel chart-panel">
+                <h2>Goroutine 数量趋势</h2>
+                <canvas id="goroutine-chart"></canvas>
+            </div>
+
+            <!-- 内存使用趋势图 -->
+            <div class="panel chart-panel">
+                <h2>内存使用趋势</h2>
+                <canvas id="memory-chart"></canvas>
+            </div>
+
+            <!-- Goroutine 状态分布 -->
+            <div class="panel">
+                <h2>Goroutine 状态分布</h2>
+                <canvas id="state-chart"></canvas>
+            </div>
+
+            <!-- Goroutine 列表 -->
+            <div class="panel goroutine-list-panel">
+                <h2>Goroutine 列表</h2>
+                <div class="controls">
+                    <label>
+                        <input type="checkbox" id="auto-scroll" checked>
+                        自动滚动
+                    </label>
+                    <label>
+                        最大显示数量: 
+                        <select id="max-display">
+                            <option value="25">25</option>
+                            <option value="50" selected>50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </label>
+                </div>
+                <div id="goroutine-list" class="goroutine-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="web/script.js"></script>
+</body>
+</html> 

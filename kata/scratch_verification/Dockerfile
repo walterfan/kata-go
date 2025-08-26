@@ -1,0 +1,38 @@
+# Build stage
+FROM golang:1.25-alpine AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Accept GOPROXY as a build argument
+ARG GOPROXY
+ENV GOPROXY=$GOPROXY
+
+# Copy all source code first
+COPY . .
+
+# Download and tidy dependencies
+RUN apk add --no-cache git ca-certificates
+RUN go mod tidy
+RUN go mod download
+
+# Build the application with CGO disabled and static linking
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o server .
+
+# Runtime stage
+FROM scratch
+
+# Copy ca-certificates from build stage for HTTPS support
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+
+# Copy the binary from build stage
+COPY --from=builder /app/server /server
+
+# Copy configuration file
+COPY --from=builder /app/config.yaml /config.yaml
+
+# Expose port
+EXPOSE 8080
+
+# Set the entrypoint
+ENTRYPOINT ["/server"]

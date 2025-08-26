@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  scratch-verification:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        GOPROXY: ${GOPROXY}
+    container_name: scratch-server
+    ports:
+      - "8080:8080"
+    volumes:
+      # Mount the config file for easy configuration changes
+      - ./config.yaml:/config.yaml:ro
+      # Mount a directory for persistent user data
+      - ./data:/data
+    environment:
+      # You can override config values with environment variables if needed
+      - SERVER_PORT=8080
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

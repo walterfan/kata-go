@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+data:
+  data_dir: "/data"
+
+commands:
+  whitelist:
+    - "ls -la"
+    - "pwd"
+    - "whoami"
+    - "date"
+    - "echo 'Hello World'"
+    - "uname -a"
