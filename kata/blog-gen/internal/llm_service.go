@@ -192,7 +192,7 @@ func (s *LlmService) askWithStream(ctx context.Context, systemPrompt, userPrompt
 						"properties": map[string]interface{}{
 							"location": map[string]string{
 								"type":        "string",
-								"description": "地理位置，如 Beijing",
+								"description": "地理位置，如 Hefei, Beijing",
 							},
 						},
 						"required": []string{"location"},
@@ -230,7 +230,7 @@ func (s *LlmService) askWithStream(ctx context.Context, systemPrompt, userPrompt
 	}
 
 	var content strings.Builder
-	var toolCall *ToolFunctionCall
+	// removed unused toolCall assembly for streaming
 
 	reader := bytes.NewReader(resp.Body())
 	scanner := bufio.NewScanner(reader)
@@ -260,24 +260,11 @@ func (s *LlmService) askWithStream(ctx context.Context, systemPrompt, userPrompt
 				fmt.Print(choice.Delta.Content) // Print to console for real-time display
 			}
 
-			if choice.Delta.FunctionCall != nil {
-				if toolCall == nil {
-					toolCall = &ToolFunctionCall{}
-				}
-				if choice.Delta.FunctionCall.Name != "" {
-					toolCall.Name = choice.Delta.FunctionCall.Name
-				}
-				if choice.Delta.FunctionCall.Arguments != "" {
-					toolCall.Arguments += choice.Delta.FunctionCall.Arguments
-				}
-			}
+			// streaming tool call chunks are ignored for now
 		}
 	}
 
-	if toolCall != nil && toolCall.Name == "get_weather" {
-		return s.handleWeatherToolCall(ctx, messages, toolCall)
-	}
-
+	// no streaming tool-call handling; return accumulated content
 	return content.String(), nil
 }
 
@@ -286,7 +273,7 @@ func (s *LlmService) handleWeatherToolCall(ctx context.Context, messages []ChatM
 	var args struct {
 		Location string `json:"location"`
 	}
-	if err := json.Unmarshal([]byte(toolCall.Arguments), &args); err != nil {
+	if err := json.Unmarshal([]byte(toolCall.Function.Arguments), &args); err != nil {
 		return "", fmt.Errorf("failed to parse tool call arguments: %w", err)
 	}
 
@@ -298,14 +285,14 @@ func (s *LlmService) handleWeatherToolCall(ctx context.Context, messages []ChatM
 
 	// Add tool call and result to messages
 	messages = append(messages, ChatMessage{
-		Role:         "assistant",
-		Content:      "",
-		FunctionCall: toolCall,
+		Role:      "assistant",
+		Content:   "",
+		ToolCalls: []ToolFunctionCall{*toolCall},
 	})
 	messages = append(messages, ChatMessage{
-		Role:    "function",
-		Name:    "get_weather",
-		Content: weatherText,
+		Role:       "tool",
+		ToolCallId: toolCall.Id,
+		Content:    weatherText,
 	})
 
 	// Make final call to get complete response

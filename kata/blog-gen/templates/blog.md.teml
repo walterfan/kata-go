@@ -1,6 +1,6 @@
 # {{ title }}
 
-Have a good day, today's weather is
+Have a good day, today's weather of {{location}} is ...
 
 ...
 

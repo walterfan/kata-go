@@ -122,9 +122,10 @@ func getWeatherInfo(location string) (string, error) {
 		live := weatherResp.Lives[0]
 		weatherInfo := fmt.Sprintf("Location: %s, %s\nWeather: %s\nTemperature: %s°C\nHumidity: %s%%\nWind: %s %s\nReport Time: %s",
 			live.Province, live.City, live.Weather, live.Temperature, live.Humidity, live.WindDirection, live.WindPower, live.ReportTime)
+		logrus.Infof("Weather information: %s", weatherInfo)
 		return weatherInfo, nil
 	}
-
+	logrus.Warn("Weather information not available")
 	return "Weather information not available", nil
 }
 
