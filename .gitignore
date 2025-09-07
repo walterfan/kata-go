@@ -12,6 +12,7 @@
 *.test
 log/
 data/
+output/
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 server
