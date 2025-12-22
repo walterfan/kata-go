@@ -1,4 +1,4 @@
-# 🚀 GoPostman - REST API Client
+# GoPostman - REST API Client
 
 A beautiful, modern REST API client built with Go and Fyne, inspired by Postman. Features a clean GUI with support for predefined request collections loaded from YAML configuration.
 
@@ -16,16 +16,53 @@ A beautiful, modern REST API client built with Go and Fyne, inspired by Postman.
 
 ## 🏗️ Installation
 
+### Quick Start
 ```bash
 # Clone or download the project
 git clone <your-repo-url>
 cd kata-rest
 
+# Build and run using Makefile (recommended)
+make build
+make run
+
+# Or run directly
+make run
+```
+
+### Manual Installation
+```bash
 # Install dependencies
 go mod tidy
 
 # Run the application
-go run main.go
+go run .
+```
+
+### Using Makefile (Recommended)
+The project includes a comprehensive Makefile for easy development and deployment:
+
+```bash
+# Show all available commands
+make help
+
+# Build the application
+make build
+
+# Run the application
+make run
+
+# Development with hot reload
+make dev
+
+# Build for multiple platforms
+make build-all
+
+# Install to system
+make install
+
+# Create release packages
+make release
 ```
 
 ## 📁 Configuration
@@ -68,7 +105,7 @@ collections:
 2. **Select Request** - Pick a specific request from the collection
 3. **Auto-populate** - All fields (method, URL, headers, parameters, body) are automatically filled
 4. **Customize** - Modify any field as needed
-5. **Send** - Click the 🚀 Send button
+5. **Send** - Click the Send button
 
 ### Manual Requests
 
@@ -78,7 +115,7 @@ collections:
 4. **Add Headers** (optional) - Format: `Header-Name: value` (one per line)
 5. **Add Parameters** (optional) - Format: `key1=value1&key2=value2`
 6. **Add Body** (optional) - JSON, XML, or any text
-7. **Send Request** - Click 🚀 Send
+7. **Send Request** - Click Send
 
 ### Headers Format
 ```
@@ -116,6 +153,7 @@ kata-rest/
 ├── ui.go          # User interface creation and layout
 ├── http.go        # HTTP request handling and processing
 ├── config.yaml    # Request collections configuration
+├── Makefile       # Build automation and development tools
 ├── go.mod         # Go modules
 ├── go.sum         # Dependencies
 └── README.md      # This file
@@ -140,11 +178,61 @@ The application is now organized into focused modules:
 ✅ **Team Collaboration** - Different developers can work on different modules  
 ✅ **Code Reusability** - Modules can be extended or reused more easily
 
+## 🛠️ Development Tools
+
+### Makefile Commands
+
+The project includes a comprehensive Makefile with the following commands:
+
+| Command | Description |
+|---------|-------------|
+| `make help` | Show all available commands |
+| `make build` | Build the application for current platform |
+| `make build-all` | Build for multiple platforms (Linux, macOS, Windows) |
+| `make run` | Run the application |
+| `make dev` | Run with hot reload (requires 'air') |
+| `make deps` | Install dependencies |
+| `make deps-update` | Update dependencies to latest versions |
+| `make test` | Run tests |
+| `make test-coverage` | Run tests with coverage report |
+| `make lint` | Lint the code (requires 'golangci-lint') |
+| `make fmt` | Format the code |
+| `make clean` | Clean build artifacts |
+| `make install` | Install binary to system (/usr/local/bin) |
+| `make uninstall` | Uninstall binary from system |
+| `make release` | Create release packages for all platforms |
+| `make install-tools` | Install development tools (air, golangci-lint) |
+| `make check-tools` | Check if development tools are installed |
+| `make info` | Show project information |
+
+### Development Workflow
+
+```bash
+# 1. Install development tools
+make install-tools
+
+# 2. Check your setup
+make check-tools
+
+# 3. Install dependencies
+make deps
+
+# 4. Start development with hot reload
+make dev
+
+# 5. Build and test
+make build
+make test
+
+# 6. Create release
+make release
+```
+
 ## 🎨 GUI Layout
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ 🚀 GoPostman - REST API Client                            │
+│ GoPostman - REST API Client                            │
 ├─────────────┬───────────────────────────────────────────────┤
 │📚 Collections│ 🌐 Request                                    │
 │             │ ┌─────────────────────────────────────────┐   │

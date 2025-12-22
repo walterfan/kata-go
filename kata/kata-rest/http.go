@@ -35,7 +35,7 @@ func (app *App) sendRequest() {
 	body := app.bodyEntry.Text
 
 	if requestURL == "" {
-		app.statusLabel.SetText("❌ Please enter a URL")
+		app.statusLabel.SetText("Please enter a URL")
 		return
 	}
 
@@ -158,8 +158,8 @@ func (app *App) buildURLWithParameters(baseURL string) string {
 
 func (app *App) handleResponse(resp *resty.Response, err error) {
 	if err != nil {
-		app.responseEntry.SetText(fmt.Sprintf("❌ Error: %v", err))
-		app.statusLabel.SetText("❌ Request failed")
+		app.responseEntry.SetText(fmt.Sprintf("Error: %v", err))
+		app.statusLabel.SetText("Request failed")
 		return
 	}
 

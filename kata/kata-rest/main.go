@@ -15,7 +15,7 @@ func main() {
 	a.SetIcon(theme.ComputerIcon())
 
 	myApp := &App{}
-	myApp.window = a.NewWindow("🚀 GoPostman - REST API Client")
+	myApp.window = a.NewWindow("GoPostman - REST API Client")
 	myApp.window.SetIcon(theme.ComputerIcon())
 
 	// Load configuration
