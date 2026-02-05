@@ -25,6 +25,75 @@ As a professional programmer, I hope to practice some routines that can be often
 5. [unix_socket](./kata/unix_socket): demostrate how to use unix socket to communicate with backend service
 
 
+## Golang 实战开发指南
+
+本项目包含一份完整的 Go 语言开发文档，专注于**易错**和**易忽略**的知识点。
+
+### 1. 基础语法与陷阱
+- [Go 概述](doc/source/1.basic/overview.md) - Go 语言核心概念
+- [常见陷阱](doc/source/1.basic/trap.md) - Go 编程中的常见错误
+- [开发工具](doc/source/1.basic/tool.md) - Go 开发工具链
+- [最佳实践](doc/source/1.basic/best_practice.md) - Go 编程最佳实践
+
+### 2. 并发编程
+- [Goroutine 深入理解](doc/source/2.concurrency/goroutine.md) - GMP 模型、生命周期、泄漏检测
+- [Channel 详解](doc/source/2.concurrency/channel.md) - Channel 类型、select、常用模式
+- [sync 包详解](doc/source/2.concurrency/sync.md) - Mutex、RWMutex、WaitGroup、Pool
+- [并发模式](doc/source/2.concurrency/patterns.md) - Worker Pool、Rate Limiter、Circuit Breaker
+- [并发陷阱](doc/source/2.concurrency/pitfalls.md) - 数据竞争、死锁、泄漏
+
+### 3. 性能调优
+- [性能分析 (Profiling)](doc/source/3.performance/profiling.md) - pprof 使用指南
+- [基准测试 (Benchmark)](doc/source/3.performance/benchmark.md) - 编写和分析基准测试
+- [逃逸分析](doc/source/3.performance/escape_analysis.md) - 栈 vs 堆分配
+- [性能优化技巧](doc/source/3.performance/optimization.md) - 字符串、切片、Map、并发优化
+
+### 4. 内存管理
+- [垃圾回收 (GC)](doc/source/4.memory/gc.md) - GC 原理、GOGC、GOMEMLIMIT
+- [内存分配](doc/source/4.memory/allocation.md) - 分配器原理、内存对齐
+- [内存泄漏排查](doc/source/4.memory/leak.md) - 常见泄漏场景与检测方法
+
+### 5. 网络编程
+- [HTTP 编程](doc/source/5.network/http.md) - net/http 服务端与客户端
+- [gRPC](doc/source/5.network/grpc.md) - Protocol Buffers、服务定义、拦截器
+- [TCP/UDP 编程](doc/source/5.network/tcp_udp.md) - 底层网络编程
+
+### 6. 常用库
+- [Viper 配置管理](doc/source/6.library/viper.md) - 配置文件、环境变量、热重载
+- [Cobra 命令行框架](doc/source/6.library/cobra.md) - CLI 应用开发
+- [Zap 日志库](doc/source/6.library/zap.md) - 高性能结构化日志
+- [GORM ORM 框架](doc/source/6.library/gorm.md) - 数据库操作
+- [Gin Web 框架](doc/source/6.library/gin.md) - HTTP 服务开发
+
+### 7. 速查表
+- [Go 语法速查表](doc/source/7.cheatsheet/syntax.md) - 语法快速参考
+- [Go 命令速查表](doc/source/7.cheatsheet/commands.md) - 常用命令
+- [Map 操作](doc/source/7.cheatsheet/map.md) - Map 使用技巧
+
+### 延伸阅读（博客文章）
+
+以下博客文章与文档主题相关，可作为补充：
+
+| 主题 | 文章 |
+|------|------|
+| 常见陷阱 | [Go 语言的常见陷阱](https://www.fanyamin.com/journal/2025-03-25-go-yu-yan-de-chang-jian-xian-jing.html) |
+| 并发哲学 | [通过通信来共享内存](https://www.fanyamin.com/journal/2025-03-26-tong-guo-tong-xin-lai-gong-xiang-nei-cun-er-bu-shi-tong-guo.html) |
+| 访问控制 | [Go Casbin 实践指南](https://www.fanyamin.com/journal/2025-07-13-go-casbin-wei-fu-wu-fang-wen-kong-zhi-zhi-shi-jian-zhi-nan.html) |
+| 代码结构 | [SoC Code Structure](https://www.fanyamin.com/journal/2025-08-25-soc-code-structure-in-golang.html)、[Go 代码组织](https://www.fanyamin.com/journal/2025-08-29-go-ying-yong-cheng-xu-de-dai-ma-zu-zhi.html) |
+| Context | [Context in Go](https://www.fanyamin.com/journal/2025-08-28-context-in-go.html) |
+| Goroutine 泄漏 | [Goroutine Leak 详解](https://www.fanyamin.com/journal/2025-12-13-go-goroutine-leak-jing-ti-ni-de-cheng-xu-zheng-zai-tou-tou-x.html) |
+| 崩溃分析 | [Go 崩溃分析实战](https://www.fanyamin.com/journal/2026-01-23-golang_crash_analysis.html) |
+| Debug Build | [C++ 宏 vs Go 链接器注入](https://www.fanyamin.com/journal/2026-02-03-debug_build_cpp_vs_go.html) |
+
+### 构建文档
+
+```bash
+cd doc
+pip install -r requirements.txt
+make html
+make serve  # 访问 http://localhost:8000
+```
+
 ## Cheat sheet of golang
 
 * [Go cheatsheet 1](go-cheat-sheet.md)

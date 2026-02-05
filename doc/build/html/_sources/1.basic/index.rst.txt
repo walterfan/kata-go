@@ -8,3 +8,6 @@
    :caption: Contents:
 
    overview
+   trap
+   tool
+   best_practice

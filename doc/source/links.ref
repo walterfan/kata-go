@@ -1,3 +1,14 @@
 .. _l_rstintro: http://docutils.sourceforge.net/docs/ref/rst/introduction.html
 .. _l_rstspecs: http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html
 .. _CC-BY-NC-ND 4.0: http://creativecommons.org/licenses/by-nc-nd/4.0
+
+.. 延伸阅读 - Walter Fan 博客中的 Go 相关文章
+.. _go-traps: https://www.fanyamin.com/journal/2025-03-25-go-yu-yan-de-chang-jian-xian-jing.html
+.. _go-share-memory: https://www.fanyamin.com/journal/2025-03-26-tong-guo-tong-xin-lai-gong-xiang-nei-cun-er-bu-shi-tong-guo.html
+.. _go-casbin: https://www.fanyamin.com/journal/2025-07-13-go-casbin-wei-fu-wu-fang-wen-kong-zhi-zhi-shi-jian-zhi-nan.html
+.. _go-soc-structure: https://www.fanyamin.com/journal/2025-08-25-soc-code-structure-in-golang.html
+.. _go-context: https://www.fanyamin.com/journal/2025-08-28-context-in-go.html
+.. _go-code-organization: https://www.fanyamin.com/journal/2025-08-29-go-ying-yong-cheng-xu-de-dai-ma-zu-zhi.html
+.. _go-goroutine-leak: https://www.fanyamin.com/journal/2025-12-13-go-goroutine-leak-jing-ti-ni-de-cheng-xu-zheng-zai-tou-tou-x.html
+.. _go-crash-analysis: https://www.fanyamin.com/journal/2026-01-23-golang_crash_analysis.html
+.. _go-debug-build: https://www.fanyamin.com/journal/2026-02-03-debug_build_cpp_vs_go.html

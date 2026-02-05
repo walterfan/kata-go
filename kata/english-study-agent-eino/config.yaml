@@ -1,0 +1,55 @@
+ai:
+  temperature: 0.7
+  skip_tls: true
+
+server:
+  port: 8080
+
+feeds:
+  # English Learning
+  - title: BBC Learning English
+    url: https://feeds.bbci.co.uk/learningenglish/english/features/6-minute-english/rss
+    category: English Learning
+  - title: VOA Learning English
+    url: https://learningenglish.voanews.com/api/zvgove_kmeqq
+    category: English Learning
+  
+  # EnglishClub & Breaking News
+  - title: EnglishClub - Latest
+    url: https://www.englishclub.com/rss.xml
+    category: English Learning
+  - title: Breaking News English
+    url: https://breakingnewsenglish.com/rss.xml
+    category: English Learning
+  
+  # Technology
+  - title: MIT Technology Review
+    url: https://www.technologyreview.com/feed/
+    category: Technology
+  - title: The Verge
+    url: https://www.theverge.com/rss/index.xml
+    category: Technology
+  - title: TechCrunch
+    url: https://techcrunch.com/feed/
+    category: Technology
+  - title: Hacker News
+    url: https://hnrss.org/frontpage
+    category: Technology
+  
+  # Medical Journals
+  - title: NEJM Latest
+    url: https://www.nejm.org/rss/newest
+    category: Medical
+  - title: NEJM Current Issue
+    url: http://content.nejm.org/rss/current.xml
+    category: Medical
+  - title: JAMA Current Issue
+    url: http://jama.jamanetwork.com/rss/site_3/67.xml
+    category: Medical
+  - title: BMJ Current Issue
+    url: http://www.bmj.com/rss/
+    category: Medical
+  - title: The Lancet
+    url: https://www.thelancet.com/rssfeed/lancet_current.xml
+    category: Medical
+

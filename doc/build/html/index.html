@@ -6,8 +6,8 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Go 语言开发指北 &mdash; Go 语言开发指北 1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+  <title>Golang 实战开发指南 &mdash; Go 语言开发指北 1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
       <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
@@ -26,11 +26,10 @@
       <script src="_static/togglebutton.js?v=4a39c7ea"></script>
       <script src="_static/design-tabs.js?v=f930bc37"></script>
       <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="1. Basic" href="1.basic/index.html" /> 
+    <link rel="next" title="1. 1. Basic" href="1.basic/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -52,9 +51,16 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">目录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="1.basic/index.html">1. Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1.basic/index.html">1. 1. Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.concurrency/index.html">2. 2. 并发编程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.performance/index.html">3. 3. 性能调优</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.memory/index.html">4. 4. 内存管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.network/index.html">5. 5. 网络编程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.library/index.html">6. 6. 常用库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7.cheatsheet/index.html">7. 7. 速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">8. 延伸阅读</a></li>
 </ul>
 
         </div>
@@ -71,7 +77,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Go 语言开发指北</li>
+      <li class="breadcrumb-item active">Golang 实战开发指南</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -81,12 +87,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="go">
-<h1>Go 语言开发指北<a class="headerlink" href="#go" title="Link to this heading"></a></h1>
+  <section id="golang">
+<h1>Golang 实战开发指南<a class="headerlink" href="#golang" title="Link to this heading"></a></h1>
+<a class="reference internal image-reference" href="https://go.dev/images/gophers/ladder.svg"><img alt="Go Gopher" class="align-center" src="https://go.dev/images/gophers/ladder.svg" style="width: 200px;" />
+</a>
 <table class="docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
-<td><p>Go 语言开发指北</p></td>
+<td><p>Golang 实战开发指南 - 专注于易错和易忽略的知识点</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Authors</strong></p></td>
 <td><p>Walter Fan</p></td>
@@ -98,22 +106,155 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2025-02-23</p></td>
+<td><p>2026-02-05</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>License</strong></p></td>
 <td><p><a class="reference external" href="http://creativecommons.org/licenses/by-nc-nd/4.0">CC-BY-NC-ND 4.0</a></p></td>
 </tr>
 </tbody>
 </table>
+<p>欢迎阅读 <strong>Golang 实战开发指南</strong>！本文档专注于 Go 语言开发中程序员 <strong>易错</strong> 和 <strong>易忽略</strong> 的知识点，
+以及 Go 相比其他语言 <strong>特殊</strong> 的地方。</p>
+<section id="id1">
+<h2>目标读者<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>有一定编程基础，想深入学习 Go 的开发者</p></li>
+<li><p>从 C++/Java/Python 等语言转向 Go 的程序员</p></li>
+<li><p>希望避免常见陷阱，写出高质量 Go 代码的工程师</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>文档特点<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>实用导向</strong>：每个知识点都有实际应用场景</p></li>
+<li><p><strong>避坑指南</strong>：重点讲解易错、易混淆的概念</p></li>
+<li><p><strong>最佳实践</strong>：提供业界推荐的编码方式</p></li>
+<li><p><strong>代码示例</strong>：可直接运行的完整代码</p></li>
+</ul>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">目录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="1.basic/index.html">1. Basic</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="1.basic/overview.html">Go 语言开发概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1.basic/index.html">1. 1. Basic</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="1.basic/overview.html">1.1. Go Programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.basic/trap.html">1.2. Go Trap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.basic/tool.html">1.3. Go Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.basic/best_practice.html">1.4. Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2.concurrency/index.html">2. 2. 并发编程</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="2.concurrency/goroutine.html">2.1. Goroutine 深入理解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.concurrency/channel.html">2.2. Channel 详解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.concurrency/context.html">2.3. Context 详解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.concurrency/sync.html">2.4. sync 包详解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.concurrency/patterns.html">2.5. 并发模式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.concurrency/pitfalls.html">2.6. 并发陷阱</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3.performance/index.html">3. 3. 性能调优</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3.performance/profiling.html">3.1. 性能分析 (Profiling)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.performance/benchmark.html">3.2. 基准测试 (Benchmark)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.performance/escape_analysis.html">3.3. 逃逸分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.performance/optimization.html">3.4. 性能优化技巧</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="4.memory/index.html">4. 4. 内存管理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="4.memory/gc.html">4.1. 垃圾回收 (GC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.memory/allocation.html">4.2. 内存分配</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.memory/leak.html">4.3. 内存泄漏排查</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="5.network/index.html">5. 5. 网络编程</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="5.network/http.html">5.1. HTTP 编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.network/grpc.html">5.2. gRPC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.network/tcp_udp.html">5.3. TCP/UDP 编程</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="6.library/index.html">6. 6. 常用库</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="6.library/viper.html">6.1. Viper 配置管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.library/cobra.html">6.2. Cobra 命令行框架</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.library/zap.html">6.3. Zap 日志库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.library/gorm.html">6.4. GORM ORM 框架</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.library/gin.html">6.5. Gin Web 框架</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="7.cheatsheet/index.html">7. 7. 速查表</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="7.cheatsheet/syntax.html">7.1. Go 语法速查表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.cheatsheet/map.html">7.2. map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7.cheatsheet/commands.html">7.3. Go 命令速查表</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">8. 延伸阅读</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="references.html#id2">8.1. 基础与陷阱</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references.html#id3">8.2. 架构与代码组织</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references.html#context">8.3. 并发与 Context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references.html#id4">8.4. 安全与访问控制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references.html#id5">8.5. 调试与崩溃分析</a></li>
 </ul>
 </li>
 </ul>
 </div>
+</section>
+<section id="id3">
+<h2>快速导航<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🚀 基础语法与陷阱</div>
+<p class="sd-card-text">Go 语言核心概念，常见陷阱与解决方案，从其他语言迁移的注意事项。</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="1.basic/index.html"><span class="doc">1. Basic</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+⚡ 并发编程</div>
+<p class="sd-card-text">Goroutine、Channel、sync 包详解，并发模式与最佳实践。</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="2.concurrency/index.html"><span class="doc">2. 并发编程</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+📊 性能调优</div>
+<p class="sd-card-text">pprof 性能分析、基准测试、逃逸分析、编译优化。</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="3.performance/index.html"><span class="doc">3. 性能调优</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🧠 内存管理</div>
+<p class="sd-card-text">GC 原理、内存分配、内存泄漏排查、对象池使用。</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="4.memory/index.html"><span class="doc">4. 内存管理</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🌐 网络编程</div>
+<p class="sd-card-text">net/http、gRPC、WebSocket、TCP/UDP 编程。</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="5.network/index.html"><span class="doc">5. 网络编程</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+📦 常用库</div>
+<p class="sd-card-text">Viper、Cobra、Zap、GORM、Gin 等常用库详解。</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="6.library/index.html"><span class="doc">6. 常用库</span></a></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
@@ -128,7 +269,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="1.basic/index.html" class="btn btn-neutral float-right" title="1. Basic" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="1.basic/index.html" class="btn btn-neutral float-right" title="1. 1. Basic" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

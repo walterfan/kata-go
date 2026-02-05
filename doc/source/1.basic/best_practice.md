@@ -1,4 +1,9 @@
 # Best Practices
+
+```{seealso}
+延伸阅读：`SoC Code Structure in Golang <https://www.fanyamin.com/journal/2025-08-25-soc-code-structure-in-golang.html>`_、`Go 应用程序的代码组织 <https://www.fanyamin.com/journal/2025-08-29-go-ying-yong-cheng-xu-de-dai-ma-zu-zhi.html>`_ — 项目结构与 MVC、依赖注入最佳实践。
+```
+
 ## Best Practices for Go Backend Development
 ### 1. **Project Structure**
 Organize your project in a way that makes it easy to navigate and maintain. A common structure for a Go backend service is:

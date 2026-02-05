@@ -6,8 +6,8 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1. Basic &mdash; Go 语言开发指北 1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+  <title>1. 1. Basic &mdash; Go 语言开发指北 1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
       <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
@@ -26,12 +26,11 @@
       <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
       <script src="../_static/design-tabs.js?v=f930bc37"></script>
       <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Go 语言开发概述" href="overview.html" />
-    <link rel="prev" title="Go 语言开发指北" href="../index.html" /> 
+    <link rel="next" title="1.1. Go Programming" href="overview.html" />
+    <link rel="prev" title="Golang 实战开发指南" href="../index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -53,12 +52,22 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">目录</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Basic</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="overview.html">Go 语言开发概述</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. 1. Basic</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html">1.1. Go Programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trap.html">1.2. Go Trap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tool.html">1.3. Go Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="best_practice.html">1.4. Best Practices</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../2.concurrency/index.html">2. 2. 并发编程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.performance/index.html">3. 3. 性能调优</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4.memory/index.html">4. 4. 内存管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5.network/index.html">5. 5. 网络编程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6.library/index.html">6. 6. 常用库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7.cheatsheet/index.html">7. 7. 速查表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">8. 延伸阅读</a></li>
 </ul>
 
         </div>
@@ -75,7 +84,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">1. Basic</li>
+      <li class="breadcrumb-item active"><span class="section-number">1. </span>1. Basic</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/1.basic/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -86,11 +95,14 @@
            <div itemprop="articleBody">
              
   <section id="basic">
-<h1>1. Basic<a class="headerlink" href="#basic" title="Link to this heading"></a></h1>
+<h1><span class="section-number">1. </span>1. Basic<a class="headerlink" href="#basic" title="Link to this heading"></a></h1>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Go 语言开发概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">1.1. Go Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trap.html">1.2. Go Trap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tool.html">1.3. Go Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="best_practice.html">1.4. Best Practices</a></li>
 </ul>
 </div>
 </section>
@@ -99,8 +111,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../index.html" class="btn btn-neutral float-left" title="Go 语言开发指北" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="overview.html" class="btn btn-neutral float-right" title="Go 语言开发概述" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="Golang 实战开发指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="overview.html" class="btn btn-neutral float-right" title="1.1. Go Programming" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
